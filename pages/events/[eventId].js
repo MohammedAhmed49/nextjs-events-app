@@ -5,20 +5,17 @@ import EventLogistics from "../../components/event-detail/event-logistics";
 import EventSummary from "../../components/event-detail/event-summary";
 import Button from "../../components/UI/button/Button";
 import ErrorAlert from "../../components/UI/error-alert/ErrorAlert";
-import { getEventById } from "../../dummy-data";
+import { getEventById, getFeaturedEvents } from "../../utils/firebase";
 
-const EventPage = () => {
-  const router = useRouter();
-  const { eventId } = router.query;
-  const event = getEventById(eventId);
-  if(!event) {
+const EventPage = ({ event }) => {
+  if (!event) {
     return (
       <Fragment>
         <ErrorAlert>
           <p>No event found!</p>
         </ErrorAlert>
-        <div className='center'>
-          <Button link='/events'>Show All Events</Button>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
         </div>
       </Fragment>
     );
@@ -36,5 +33,25 @@ const EventPage = () => {
     </Fragment>
   );
 };
+
+export async function getStaticProps(context) {
+  const event = await getEventById(context.params.eventId);
+
+  return {
+    props: {
+      event: event,
+    },
+    revalidate: 100,
+  };
+}
+
+export async function getStaticPaths() {
+  const events = await getFeaturedEvents();
+  const paths = events.map((item) => ({ params: { eventId: item.id } }));
+  return {
+    paths: paths,
+    fallback: "blocking",
+  };
+}
 
 export default EventPage;
