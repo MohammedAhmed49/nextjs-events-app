@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import EventsList from "../../components/events/EventsList";
@@ -7,10 +8,20 @@ import ErrorAlert from "../../components/UI/error-alert/ErrorAlert";
 import { getFilteredEvents } from "../../utils/firebase";
 
 const FilteredEventsPage = (props) => {
+  const headData = (
+    <Head>
+      <title>{`Events at ${props.date.year}/${props.date.month}`}</title>
+      <meta
+        name="description"
+        content={`All events for date ${props.date.year} ${props.date.month}`}
+      />
+    </Head>
+  );
 
   if (!props.filteredEvents || props.filteredEvents.length === 0) {
     return (
       <Fragment>
+        {headData}
         <ErrorAlert>
           <p>No events found for the chosen filter!</p>
         </ErrorAlert>
@@ -25,6 +36,7 @@ const FilteredEventsPage = (props) => {
 
   return (
     <Fragment>
+      {headData}
       <ResultsTitle date={date} />
       <EventsList items={props.filteredEvents} />
     </Fragment>
