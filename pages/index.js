@@ -1,3 +1,4 @@
+import Head from "next/head";
 import EventsList from "../components/events/EventsList";
 import { getFeaturedEvents } from "../utils/firebase";
 
@@ -6,6 +7,10 @@ const HomePage = (props) => {
 
   return (
     <div>
+      <Head>
+        <title>Events app</title>
+        <meta name="description" content="Featured events are shown here" />
+      </Head>
       <EventsList items={featEvents} />
     </div>
   );
