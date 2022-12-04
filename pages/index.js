@@ -1,5 +1,6 @@
 import Head from "next/head";
 import EventsList from "../components/events/EventsList";
+import NewsletterRegistration from "../components/input/newsletter-registration";
 import { getFeaturedEvents } from "../utils/firebase";
 
 const HomePage = (props) => {
@@ -11,6 +12,7 @@ const HomePage = (props) => {
         <title>Events app</title>
         <meta name="description" content="Featured events are shown here" />
       </Head>
+      <NewsletterRegistration />
       <EventsList items={featEvents} />
     </div>
   );

@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import EventContent from "../../components/event-detail/event-content";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventSummary from "../../components/event-detail/event-summary";
+import Comments from "../../components/input/comments";
 import Button from "../../components/UI/button/Button";
 import ErrorAlert from "../../components/UI/error-alert/ErrorAlert";
 import { getEventById, getFeaturedEvents } from "../../utils/firebase";
@@ -35,6 +36,7 @@ const EventPage = ({ event }) => {
         imageAlt={event.title}
       />
       <EventContent>{event.description}</EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 };
