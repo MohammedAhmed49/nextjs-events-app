@@ -33,7 +33,11 @@ function Comments(props) {
         name: commentData.name,
         text: commentData.text,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   }
 
   return (
