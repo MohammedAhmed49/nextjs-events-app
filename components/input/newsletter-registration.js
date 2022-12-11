@@ -1,10 +1,18 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import NotificationContext from "../../store/NotificationContext";
 import classes from "./newsletter-registration.module.css";
 
 function NewsletterRegistration() {
   const emailRef = useRef();
+  const notificationCtx = useContext(NotificationContext);
+
   function registrationHandler(event) {
     event.preventDefault();
+    notificationCtx.showNotification({
+      title: "Signing up...",
+      message: "Registering your email!",
+      status: "pending",
+    });
     fetch("/api/newsletter", {
       method: "POST",
       body: JSON.stringify({
@@ -12,7 +20,13 @@ function NewsletterRegistration() {
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        notificationCtx.showNotification({
+          title: "Signed up successfully",
+          message: "Registered your email!",
+          status: "success",
+        });
+      });
   }
 
   return (
